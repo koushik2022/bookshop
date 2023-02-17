@@ -91,7 +91,7 @@ pipeline{
           stage('Deploy Docker Image to ECS'){
                steps{
                    withAWS(credentials: 'awscreds', region: 'ap-south-1'){
-                    sh 'aws ecs update-servie --cluster ${cluster} --service ${service} --force-new-deployment'
+                    sh 'aws ecs update-service --cluster ${cluster} --service ${service} --force-new-deployment'
                    }
                }
             }
