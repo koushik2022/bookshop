@@ -4,6 +4,9 @@ pipeline{
     environment{
         SONAR_SCANNER = 'sonarscanner'
         SONAR_SERVER = 'sonarqube-server'
+        registryCredential = 'ecr:ap-south-1:awscreds'
+        appRegistry = '347003782229.dkr.ecr.ap-south-1.amazonaws.com/bookshopImg'
+        bookshopRegistry = 'https://347003782229.dkr.ecr.ap-south-1.amazonaws.com'
     }
     stages{
         stage('Checkout'){
@@ -64,5 +67,24 @@ pipeline{
                 }
             }
          }
+
+         stage('Build Docker Image'){
+            steps{
+                script{
+                    dockerImage = docker.build(appRegistry + ":$BUILD_NUMBER","./")
+                }
+            }
+         }
+
+         stage('Upload Docker Image to ECR'){
+             steps{
+                 script{
+                    docker.withRegistry(bookshopRegistry,registryCredential){
+                        dockerImage.push("$BUILD_NUMBER")
+                        dockerImage.push("latest")
+                    }
+                 }
+             }
+          }
     }
 }
