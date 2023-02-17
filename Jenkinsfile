@@ -21,5 +21,11 @@ pipeline{
               }
 
          }
+
+         stage('Checkstyle Analysis'){
+            steps{
+                sh 'mvn checkstyle:checkstyle'
+            }
+         }
     }
 }
