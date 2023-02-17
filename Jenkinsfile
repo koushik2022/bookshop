@@ -17,6 +17,12 @@ pipeline{
              steps{
                   sh 'mvn clean package -DskipTests=true'
              }
+             post{
+                success{
+                    echo 'Archiving...'
+                    archiveArtifacts artifacts:'**/*.jar'
+                }
+             }
 
          }
 
