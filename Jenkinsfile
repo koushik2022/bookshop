@@ -7,6 +7,8 @@ pipeline{
         registryCredential = 'ecr:ap-south-1:awscreds'
         appRegistry = '347003782229.dkr.ecr.ap-south-1.amazonaws.com/bookshopimg'
         bookshopRegistry = 'https://347003782229.dkr.ecr.ap-south-1.amazonaws.com'
+        cluster = 'bookshopcluster'
+        service = 'bookshopservice'
     }
     stages{
         stage('Checkout'){
@@ -86,5 +88,12 @@ pipeline{
                  }
              }
           }
+          stage('Deploy Docker Image to ECS'){
+               steps{
+                   withAWS(credentials: 'awscreds', region: 'ap-south-1'){
+                    sh 'aws ecs update-servie --cluster ${cluster} --service ${service} --force-new-deployment'
+                   }
+               }
+            }
     }
 }
