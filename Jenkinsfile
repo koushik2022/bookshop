@@ -5,7 +5,7 @@ pipeline{
         SONAR_SCANNER = 'sonarscanner'
         SONAR_SERVER = 'sonarqube-server'
         registryCredential = 'ecr:ap-south-1:awscreds'
-        appRegistry = '347003782229.dkr.ecr.ap-south-1.amazonaws.com/bookshopImg'
+        appRegistry = '347003782229.dkr.ecr.ap-south-1.amazonaws.com/bookshopimg'
         bookshopRegistry = 'https://347003782229.dkr.ecr.ap-south-1.amazonaws.com'
     }
     stages{
